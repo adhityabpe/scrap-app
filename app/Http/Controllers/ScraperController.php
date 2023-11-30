@@ -65,12 +65,18 @@ class ScraperController extends Controller
         });
         date_default_timezone_set('Asia/Jakarta');
         $fileNames='rate-'.date('d-m-Y-h-i-a').'.json'; 
-        $file = new Filesystem;
-        $file->cleanDirectory('storage/app/backgrounds');
-
-        Storage::disk('public')->put($fileNames,json_encode(['meta' => $meta, 'rates' => $rates]));
-
-
-        return response()->json(['meta' => $meta, 'rates' => $rates]);
+        
+        $echo_time = time();
+        $interval = 4*60;
+        while(true){
+            if ($echo_time + $interval >= time()){
+                $file = new Filesystem;
+                $file->cleanDirectory('storage/app/backgrounds');
+                   $echo_time = time(); // set up timestamp for next interval
+                   Storage::disk('public')->put($fileNames,json_encode(['meta' => $meta, 'rates' => $rates]));
+                   return response()->json(['meta' => $meta, 'rates' => $rates]);
+                }
+        }
+       
     }
 }

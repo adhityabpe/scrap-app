@@ -28,6 +28,11 @@
     </style>
 </head>
 <body>
-    <a href="/api/kurs" class="myButton">Scrap</a>
+    <a href="/api/kurs" onclick="myFunction()" class="myButton">Scrap</a>
 </body>
+<script>
+	function myFunction() {
+  		alert("Proses berhasil ditambahkan pada Job");
+	}
+</script>
 </html>
